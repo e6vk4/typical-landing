@@ -28,4 +28,13 @@
     margin: 0;
     font-weight: 400;
   }
+
+  code {
+    font-size: 12px;
+    display: inline-block;
+    background-color: rgb(235, 235, 235);
+    border: 1px dashed rgb(199, 199, 199);
+    border-radius: 5px;
+    padding: 2px 4px;
+  }
 }
