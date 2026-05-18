@@ -52,6 +52,15 @@
     <meta name="twitter:url" content="https://typicalhq.vercel.app" />
   </head>
   <body>
+    <div id="videoOverlay" class="overlay hidden">
+      <button id="closeDemo" class="close">×</button>
+
+      <video id="demoVideo" controls playsinline>
+        <source src="/assets/media/web-screencast.mp4" type="video/mp4" />
+        <source src="/assets/media/web-screencast.webm" type="video/webm" />
+      </video>
+    </div>
+
     <main>
       <div class="relative mx-auto w-full grow">
         <!-- Heading -->
@@ -81,6 +90,7 @@
 
             <div class="flex justify-center">
               <button
+                id="openDemo"
                 class="flex items-center gap-3 h-10 rounded-full bg-gray-100 px-4 text-sm font-semibold hover:bg-gray-200 cursor-pointer transition-all duration-200 ease-in-out"
               >
                 Watch demo
@@ -334,5 +344,42 @@
         </footer>
       </div>
     </main>
+
+    <script>
+      const openBtn = document.getElementById("openDemo");
+      const closeBtn = document.getElementById("closeDemo");
+      const overlay = document.getElementById("videoOverlay");
+      const video = document.getElementById("demoVideo");
+
+      function openVideo() {
+        overlay.classList.remove("hidden");
+
+        // ensure highest quality playback
+        video.currentTime = 0;
+        video.play();
+
+        // request fullscreen
+        if (overlay.requestFullscreen) {
+          overlay.requestFullscreen();
+        }
+      }
+
+      function closeVideo() {
+        video.pause();
+        overlay.classList.add("hidden");
+
+        if (document.fullscreenElement) {
+          document.exitFullscreen();
+        }
+      }
+
+      openBtn.addEventListener("click", openVideo);
+      closeBtn.addEventListener("click", closeVideo);
+
+      // ESC key support
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") closeVideo();
+      });
+    </script>
   </body>
 </html>
