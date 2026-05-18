@@ -62,6 +62,38 @@
     max-height: 80vh;
     border-radius: 12px;
     box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    transition: opacity 400ms ease;
+  }
+
+  .overlay.is-ready video {
+    opacity: 1;
+  }
+
+  .spinner {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 40px;
+    height: 40px;
+    margin: -20px 0 0 -20px;
+    border: 3px solid rgba(255, 255, 255, 0.2);
+    border-top-color: rgba(255, 255, 255, 0.9);
+    border-radius: 9999px;
+    animation: spin 0.8s linear infinite;
+    opacity: 1;
+    transition: opacity 250ms ease;
+    pointer-events: none;
+  }
+
+  .overlay.is-ready .spinner {
+    opacity: 0;
+  }
+
+  @keyframes spin {
+    to {
+      transform: rotate(360deg);
+    }
   }
 
   .close {

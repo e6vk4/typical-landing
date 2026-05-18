@@ -54,6 +54,7 @@
   <body>
     <div id="videoOverlay" class="overlay hidden" aria-hidden="true">
       <button id="closeDemo" class="close" aria-label="Close demo">×</button>
+      <div id="demoSpinner" class="spinner" aria-hidden="true"></div>
       <video id="demoVideo" preload="none" muted playsinline>
         <source src="/assets/media/web-screencast.mp4" type="video/mp4" />
         <source src="/assets/media/web-screencast.webm" type="video/webm" />
@@ -260,17 +261,27 @@
         const openBtn = document.getElementById("openDemo");
         const closeBtn = document.getElementById("closeDemo");
 
+        const markReady = () => overlay.classList.add("is-ready");
+
         const openVideo = () => {
-          overlay.classList.remove("hidden");
+          overlay.classList.remove("hidden", "is-ready");
           overlay.setAttribute("aria-hidden", "false");
           document.body.style.overflow = "hidden";
-          video.currentTime = 0;
+          try {
+            video.currentTime = 0;
+          } catch (_) {}
+          if (video.readyState >= 3) {
+            markReady();
+          } else {
+            video.load();
+          }
           video.play().catch(() => {});
         };
 
         const closeVideo = () => {
           video.pause();
           overlay.classList.add("hidden");
+          overlay.classList.remove("is-ready");
           overlay.setAttribute("aria-hidden", "true");
           document.body.style.overflow = "";
         };
@@ -278,6 +289,8 @@
         openBtn.addEventListener("click", openVideo);
         closeBtn.addEventListener("click", closeVideo);
         video.addEventListener("ended", closeVideo);
+        video.addEventListener("canplay", markReady);
+        video.addEventListener("playing", markReady);
         overlay.addEventListener("click", (e) => {
           if (e.target === overlay) closeVideo();
         });
