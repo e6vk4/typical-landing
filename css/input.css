@@ -38,35 +38,51 @@
     padding: 2px 4px;
   }
 
-  /* Video demo */
+}
+
+/* Video demo */
+@layer components {
   .overlay {
     position: fixed;
     inset: 0;
-    background: black;
+    background: rgba(0, 0, 0, 0.75);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     display: flex;
     align-items: center;
     justify-content: center;
+    padding: 24px;
     z-index: 9999;
   }
 
-  .hidden {
-    display: none;
-  }
-
-  video {
-    width: 100vw;
-    height: 100vh;
-    object-fit: contain;
+  .overlay video {
+    width: auto;
+    height: auto;
+    max-width: min(92vw, 1024px);
+    max-height: 80vh;
+    border-radius: 12px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
   }
 
   .close {
     position: absolute;
     top: 16px;
     right: 16px;
-    font-size: 32px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 28px;
+    line-height: 1;
     color: white;
-    background: transparent;
+    background: rgba(255, 255, 255, 0.1);
     border: none;
+    border-radius: 9999px;
     cursor: pointer;
+  }
+
+  .close:hover {
+    background: rgba(255, 255, 255, 0.2);
   }
 }
