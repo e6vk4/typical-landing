@@ -186,8 +186,27 @@
                 <li>the browser is restarted</li>
               </ul>
               <p>
-                Typical does not store browsing data on disk, in
-                <code>chrome.storage</code> or in any remote database.
+                Typical does not store your browsing data on disk or in any
+                remote database. The only values written to
+                <code>chrome.storage</code> are:
+              </p>
+              <ul class="list-disc space-y-3 ml-4">
+                <li>
+                  the version number of the most recently viewed in app
+                  changelog, saved to <code>chrome.storage.local</code> so the
+                  “what's new” indicator is suppressed after you read it
+                </li>
+                <li>
+                  a short lived list of tab IDs that were open when the
+                  extension was installed or updated, saved to
+                  <code>chrome.storage.session</code> so a reload prompt can be
+                  shown on those tabs; this list is cleared automatically when
+                  the browser restarts
+                </li>
+              </ul>
+              <p>
+                Neither value contains page content, URLs, or any information
+                about the websites you visit.
               </p>
             </div>
 
@@ -211,6 +230,13 @@
                   <span class="font-semibold">Active tab and scripting:</span>
                   Required to run font detection and analysis on the current
                   page.
+                </li>
+                <li>
+                  <span class="font-semibold">Storage:</span>
+                  Required to remember which version of the in app changelog you
+                  have already viewed, and to keep a short lived list of tab IDs
+                  so a reload prompt can be shown on tabs that were already open
+                  when the extension was installed or updated.
                 </li>
               </ul>
               <p>
